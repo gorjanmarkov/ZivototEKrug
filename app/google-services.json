@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "416534280883",
+    "project_id": "the-circle-of-life",
+    "storage_bucket": "the-circle-of-life.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:416534280883:android:05f94f9f7586d9e6f5cec6",
+        "android_client_info": {
+          "package_name": "com.example.zivotot_e_krug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "416534280883-5305uhm9dj3ano2t62uu4pgq1qh10mbt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPlJN2cBMSxKtKuTVbtR4w9719t4CA9UE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "416534280883-5305uhm9dj3ano2t62uu4pgq1qh10mbt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
