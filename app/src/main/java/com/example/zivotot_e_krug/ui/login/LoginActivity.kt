@@ -15,9 +15,7 @@ import android.widget.Toast
 import com.example.zivotot_e_krug.databinding.ActivityLoginBinding
 
 import com.example.zivotot_e_krug.R
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+
 
 
 class LoginActivity : AppCompatActivity() {

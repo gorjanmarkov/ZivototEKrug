@@ -4,6 +4,5 @@
         <item name="chipBackgroundColor">@color/chip_background_color</item>
         <item name="android:textColor">@color/chip_text_color</item>
         <item name="checkedIconTint">@color/chip_text_color</item>
-        <item name="chip"></item>
     </style>
 </resources>
