@@ -1,6 +1,7 @@
 package com.example.zivotot_e_krug.ui.login
 
 import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -15,7 +16,7 @@ import android.widget.Toast
 import com.example.zivotot_e_krug.databinding.ActivityLoginBinding
 
 import com.example.zivotot_e_krug.R
-
+import com.example.zivotot_e_krug.ui.register.RegisterActivity
 
 
 class LoginActivity : AppCompatActivity() {
@@ -33,6 +34,12 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.password
         val login = binding.login
         val loading = binding.loading
+        val register = binding.register
+
+        register!!.setOnClickListener {
+            val intent = Intent(this,RegisterActivity::class.java)
+            startActivity(intent)
+        }
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -64,11 +71,13 @@ class LoginActivity : AppCompatActivity() {
             }
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
+                setResult(Activity.RESULT_OK)
+                finish()
             }
-            setResult(Activity.RESULT_OK)
+
 
             //Complete and destroy login activity once successful
-            finish()
+
         })
 
         username.afterTextChanged {
