@@ -16,4 +16,9 @@
     <string name="volunteer">Volunteer</string>
     <string name="adult">Adult</string>
     <string name="organizer">Organizer</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tasks">All</string>
+    <string name="new_task">New</string>
+    <string name="review_task">Review</string>
 </resources>

@@ -1,10 +1,12 @@
 package com.example.zivotot_e_krug.data
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import com.example.zivotot_e_krug.data.model.LoggedInUser
+import com.example.zivotot_e_krug.ui.users.adult.AdultActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.io.IOException
@@ -14,7 +16,7 @@ import java.io.IOException
  */
 class LoginDataSource {
 
-    val auth : FirebaseAuth = Firebase.auth
+    val auth: FirebaseAuth = Firebase.auth
 
     fun login(username: String, password: String): Result<LoggedInUser> {
 
@@ -25,17 +27,13 @@ class LoginDataSource {
                     if (task.isSuccessful) {
                         // Sign in success, update UI with the signed-in user's information
                         Log.d(TAG, "signInWithEmail:success")
-
-
                     } else {
                         // If sign in fails, display a message to the user.
-//                        Log.w(TAG, "signInWithEmail:failure", task.exception)
-//                        Toast.makeText(, "Authentication failed.",
-//                            Toast.LENGTH_SHORT).show()
-//                        updateUI(null)
+                        Log.w(TAG, "signInWithEmail:failure", task.exception)
+                       // throw IllegalArgumentException("Invalid username or password")
                     }
                 }
-            var user = LoggedInUser(auth.currentUser!!.displayName.toString(),auth.uid.toString())
+            var user = LoggedInUser(auth.currentUser!!.displayName.toString(), auth.uid.toString())
             return Result.Success(user)
         } catch (e: Throwable) {
             return Result.Error(IOException("Error logging in", e))
@@ -43,6 +41,6 @@ class LoginDataSource {
     }
 
     fun logout() {
-       auth.signOut()
+        auth.signOut()
     }
 }
