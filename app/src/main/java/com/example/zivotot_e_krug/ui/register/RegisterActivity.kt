@@ -1,5 +1,6 @@
 package com.example.zivotot_e_krug.ui.register
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -8,6 +9,7 @@ import android.widget.Toast
 import com.example.zivotot_e_krug.R
 import com.example.zivotot_e_krug.databinding.ActivityLoginBinding
 import com.example.zivotot_e_krug.databinding.ActivityRegisterBinding
+import com.example.zivotot_e_krug.ui.users.adult.AdultActivity
 import com.google.android.material.chip.ChipGroup
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
@@ -47,8 +49,7 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Enter your First name", Toast.LENGTH_LONG).show()
             } else if (lastname.text.isEmpty()) {
                 Toast.makeText(this, "Enter your Last name", Toast.LENGTH_LONG).show()
-            } else if (number.text.isEmpty() || !number.text.startsWith("07") ||
-                !number.text.startsWith("+389")) {
+            } else if (number.text.isEmpty() || !number.text.startsWith("07") ) {
                 Toast.makeText(this, "Wrong input for your number", Toast.LENGTH_LONG).show()
             } else {
                 auth.createUserWithEmailAndPassword(
@@ -71,6 +72,8 @@ class RegisterActivity : AppCompatActivity() {
                                 }
                             }
                             Toast.makeText(this,"User registered.",Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this,AdultActivity::class.java)
+                            startActivity(intent)
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)

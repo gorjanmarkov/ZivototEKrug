@@ -17,12 +17,14 @@ import com.example.zivotot_e_krug.databinding.ActivityLoginBinding
 
 import com.example.zivotot_e_krug.R
 import com.example.zivotot_e_krug.ui.register.RegisterActivity
+import com.example.zivotot_e_krug.ui.users.adult.AdultActivity
 
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,17 +37,20 @@ class LoginActivity : AppCompatActivity() {
         val login = binding.login
         val loading = binding.loading
         val register = binding.register
+        val registerintent = Intent(this,RegisterActivity::class.java)
+        val adultintent = Intent(this,AdultActivity::class.java)
 
         register!!.setOnClickListener {
-            val intent = Intent(this,RegisterActivity::class.java)
-            startActivity(intent)
+
+            startActivity(registerintent)
         }
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
         if(loginViewModel.loggedIn.value == true){
-            //Go to activity
+
+            startActivity(adultintent)
         }
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
@@ -72,6 +77,7 @@ class LoginActivity : AppCompatActivity() {
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
                 setResult(Activity.RESULT_OK)
+                startActivity(adultintent)
                 finish()
             }
 
