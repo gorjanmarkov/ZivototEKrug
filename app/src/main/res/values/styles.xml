@@ -5,4 +5,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="checkedIconTint">@color/black</item>
     </style>
+    <style name="CustomBottomNavigation" parent="Widget.Design.BottomNavigationView">
+        <item name="android:background">@color/bottom_navigation_background</item>
+    </style>
 </resources>

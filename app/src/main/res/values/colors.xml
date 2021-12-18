@@ -15,4 +15,5 @@
     <color name="logo_color">#2FDD92</color>
     <color name="welcome_text_color">#28381B</color>
     <color name="edit_text_background_color">#CDE0D4</color>
+    <color name="bottom_navigation_background">#CDE0D4</color>
 </resources>

@@ -18,12 +18,16 @@ import com.example.zivotot_e_krug.databinding.ActivityLoginBinding
 import com.example.zivotot_e_krug.R
 import com.example.zivotot_e_krug.ui.register.RegisterActivity
 import com.example.zivotot_e_krug.ui.users.adult.AdultActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var auth : FirebaseAuth
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +35,9 @@ class LoginActivity : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        auth = Firebase.auth
+        auth.signOut()
+        supportActionBar!!.hide()
         val username = binding.username
         val password = binding.password
         val login = binding.login
