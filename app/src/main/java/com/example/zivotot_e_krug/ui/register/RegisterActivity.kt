@@ -27,6 +27,7 @@ class RegisterActivity : AppCompatActivity() {
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar!!.hide()
         auth = Firebase.auth
         val username = binding.email
         val password = binding.password
@@ -72,8 +73,7 @@ class RegisterActivity : AppCompatActivity() {
                                 }
                             }
                             Toast.makeText(this,"User registered.",Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this,AdultActivity::class.java)
-                            startActivity(intent)
+                            finish()
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)

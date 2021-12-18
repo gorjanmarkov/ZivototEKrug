@@ -21,4 +21,12 @@
     <string name="tasks">All</string>
     <string name="new_task">New</string>
     <string name="review_task">Review</string>
+    <string name="name_of_activity">Name of Task</string>
+    <string name="describe_the_task">Describe the Task</string>
+    <string name="repetitive">Repetitive</string>
+    <string name="nonRepetitive">Non repetitive</string>
+    <string name="dateFormat">DD/MM/YYYY</string>
+    <string name="urgent">Urgent</string>
+    <string name="non_urgent">Non Urgent</string>
+    <string name="create_task">Create Task</string>
 </resources>
