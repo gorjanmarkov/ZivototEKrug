@@ -55,7 +55,6 @@ class LoginActivity : AppCompatActivity() {
             .get(LoginViewModel::class.java)
 
         if(loginViewModel.loggedIn.value == true){
-
             startActivity(adultintent)
         }
 
@@ -118,10 +117,11 @@ class LoginActivity : AppCompatActivity() {
                 false
             }
 
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
-            }
+
+        }
+        login.setOnClickListener {
+            loading.visibility = View.VISIBLE
+            loginViewModel.login(username.text.toString(), password.text.toString())
         }
     }
 

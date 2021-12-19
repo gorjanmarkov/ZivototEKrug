@@ -14,6 +14,8 @@ import com.google.android.material.chip.ChipGroup
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
@@ -21,13 +23,14 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
     private val TAG by lazy { RegisterActivity::class.java.simpleName }
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar!!.hide()
+        database = Firebase.database.reference
         auth = Firebase.auth
         val username = binding.email
         val password = binding.password
@@ -53,6 +56,7 @@ class RegisterActivity : AppCompatActivity() {
             } else if (number.text.isEmpty() || !number.text.startsWith("07") ) {
                 Toast.makeText(this, "Wrong input for your number", Toast.LENGTH_LONG).show()
             } else {
+                role = roleGroup.checkedChipId
                 auth.createUserWithEmailAndPassword(
                     username.text.toString(),
                     password.text.toString()
@@ -65,13 +69,18 @@ class RegisterActivity : AppCompatActivity() {
                             val user = auth.currentUser
                             val profileUpdates = userProfileChangeRequest {
                                 displayName =
-                                    "${fistName.text.toString()} ${lastname.text.toString()}"
+                                    "${fistName.text} ${lastname.text}"
                             }
-                            user!!.updateProfile(profileUpdates).addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    Log.d(TAG, "Updated profile.")
+                            user?.let{
+                                it.updateProfile(profileUpdates).addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Log.d(TAG, "Updated profile.")
+                                    }
                                 }
                             }
+                            database.child("users").child(role.toString()).child(auth.currentUser?.let {
+                                it.uid
+                            }.toString()).child("number").setValue(number.text.toString())
                             Toast.makeText(this,"User registered.",Toast.LENGTH_SHORT).show()
                             finish()
                         } else {

@@ -33,7 +33,7 @@ class LoginDataSource {
                        // throw IllegalArgumentException("Invalid username or password")
                     }
                 }
-            var user = LoggedInUser(auth.currentUser!!.displayName.toString(), auth.uid.toString())
+            var user = LoggedInUser(auth.currentUser?.let{it.displayName}.toString(), auth.uid.toString())
             return Result.Success(user)
         } catch (e: Throwable) {
             return Result.Error(IOException("Error logging in", e))
