@@ -30,4 +30,5 @@
     <string name="non_urgent">Non Urgent</string>
     <string name="create_task">Create Task</string>
     <string name="location">Location</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

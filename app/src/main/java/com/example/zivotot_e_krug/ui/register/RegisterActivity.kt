@@ -1,16 +1,11 @@
 package com.example.zivotot_e_krug.ui.register
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Toast
-import com.example.zivotot_e_krug.R
-import com.example.zivotot_e_krug.databinding.ActivityLoginBinding
+
 import com.example.zivotot_e_krug.databinding.ActivityRegisterBinding
-import com.example.zivotot_e_krug.ui.users.adult.AdultActivity
-import com.google.android.material.chip.ChipGroup
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest

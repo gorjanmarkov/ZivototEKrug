@@ -2,6 +2,7 @@ package com.example.zivotot_e_krug.ui.users.adult
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -44,13 +45,18 @@ class NewTaskFragment : Fragment() {
         adultViewModel = activity?.let {
             ViewModelProvider(it).get(AdultViewModel::class.java)
         }!!
+        adultViewModel.addListener()
+
         val button = binding.createTask
         val title = binding.nameOfActivity.text
         val description = binding.descriptionOfActivity.text
         val datePicker = binding.datePicker
-        val locationPicker = binding.locationPicker.text
+        val locationPicker = binding.locationPicker
         var repetitive: String = ""
         var urgency: String = ""
+        adultViewModel._location.observe(requireActivity(),{
+        locationPicker.text = it
+        })
 
         datePicker.text = SimpleDateFormat("dd.MM.yyyy").format(System.currentTimeMillis())
 
@@ -67,7 +73,6 @@ class NewTaskFragment : Fragment() {
 
         }
         datePicker.setOnClickListener {
-            Toast.makeText(requireContext(),"Text",Toast.LENGTH_SHORT).show()
             DatePickerDialog(requireContext(), dateSetListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
@@ -77,8 +82,7 @@ class NewTaskFragment : Fragment() {
 
 
         button.setOnClickListener {
-            binding.loading.visibility = View.VISIBLE
-            Toast.makeText(requireContext(),"Text",Toast.LENGTH_SHORT).show()
+            //binding.loading.visibility = View.VISIBLE
             if (binding.chipGroup.checkedChipId.equals(R.id.repetitive)) {
                 repetitive = "true"
             } else {
@@ -95,10 +99,15 @@ class NewTaskFragment : Fragment() {
                 title.toString(),
                 description.toString(),
                 datePicker.text.toString(),
-                locationPicker.toString(),
+                locationPicker.text.toString(),
                 repetitive,
                 urgency
             )
+        }
+
+        locationPicker.setOnClickListener{
+            val intent = Intent(requireContext(),MapsActivity::class.java)
+            startActivity(intent)
         }
 
         return binding.root
