@@ -1,4 +1,4 @@
-package com.example.zivotot_e_krug.ui.users.adult
+package com.example.zivotot_e_krug.ui.users.adult.maps
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -10,7 +10,6 @@ import androidx.core.app.ActivityCompat
 import com.example.zivotot_e_krug.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -27,7 +26,6 @@ import com.google.firebase.ktx.Firebase
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var map: GoogleMap
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
@@ -36,6 +34,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         setupLocClient()
+
 
     }
     private fun getAddress(lat: LatLng): String? {
@@ -60,7 +59,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun requestLocPermissions() {
         ActivityCompat.requestPermissions(this,
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), //permission in the manifest
-            REQUEST_LOCATION)
+            REQUEST_LOCATION
+        )
     }
 
     companion object {
@@ -77,7 +77,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             // call requestLocPermissions() if permission isn't granted
             requestLocPermissions()
         } else {
-
             fusedLocClient.lastLocation.addOnCompleteListener {
                 // lastLocation is a task running in the background
                 val location = it.result //obtain location
@@ -90,13 +89,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     val latLng = LatLng(location.latitude, location.longitude)
                     // create a marker at the exact location
                     map.addMarker(MarkerOptions().position(latLng)
+                        .draggable(true)
                         .title("You are currently here!"))
                     // create an object that will specify how the camera will be updated
                     val update = CameraUpdateFactory.newLatLngZoom(latLng, 16.0f)
-
                     map.moveCamera(update)
                     //Save the location data to the database
-                    ref.child("users").child("2131230968").child(auth.uid.toString()).child("Location").setValue(getAddress(latLng))
+                    ref.child("Address").setValue(getAddress(latLng))
                 } else {
                     // if location is null , log an error message
                     Log.e(TAG, "No location found")

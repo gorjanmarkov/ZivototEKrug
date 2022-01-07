@@ -14,12 +14,13 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import com.example.zivotot_e_krug.databinding.ActivityLoginBinding
-
 import com.example.zivotot_e_krug.R
 import com.example.zivotot_e_krug.ui.register.RegisterActivity
 import com.example.zivotot_e_krug.ui.users.adult.AdultActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 
@@ -28,12 +29,15 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
     private lateinit var auth : FirebaseAuth
+    private lateinit var database: DatabaseReference
+    private lateinit var activityIntent : Intent
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        database = Firebase.database.reference
         setContentView(binding.root)
         auth = Firebase.auth
         auth.signOut()
@@ -43,20 +47,28 @@ class LoginActivity : AppCompatActivity() {
         val login = binding.login
         val loading = binding.loading
         val register = binding.register
-        val registerintent = Intent(this,RegisterActivity::class.java)
-        val adultintent = Intent(this,AdultActivity::class.java)
+        val registerIntent = Intent(this,RegisterActivity::class.java)
+
 
         register!!.setOnClickListener {
 
-            startActivity(registerintent)
+            startActivity(registerIntent)
         }
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
 
         if(loginViewModel.loggedIn.value == true){
-            startActivity(adultintent)
+            startActivity(activityIntent)
         }
+        loginViewModel.addListener()
+        loginViewModel._userType.observe(this,{
+            activityIntent = if(it == "Adult"){
+                Intent(this,AdultActivity::class.java)
+            }else{
+                Intent(this,AdultActivity::class.java)
+            }
+        })
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
@@ -82,7 +94,7 @@ class LoginActivity : AppCompatActivity() {
             if (loginResult.success != null) {
                 updateUiWithUser(loginResult.success)
                 setResult(Activity.RESULT_OK)
-                startActivity(adultintent)
+                startActivity(activityIntent)
                 finish()
             }
 
@@ -127,11 +139,14 @@ class LoginActivity : AppCompatActivity() {
 
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
+        val displayName = " ${database.child("users").child(auth.currentUser!!.uid).
+        child("FirstName").get()}" +
+                " ${database.child("users").child(auth.currentUser?.
+                uid.toString()).child("LastName").get()} "
+         //TODO : initiate successful logged in experience
         Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
+            this,
+            "$welcome ",
             Toast.LENGTH_LONG
         ).show()
     }

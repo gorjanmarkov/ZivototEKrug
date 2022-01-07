@@ -60,7 +60,6 @@ class RegisterActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
-                            role = roleGroup.checkedChipId
                             val user = auth.currentUser
                             val profileUpdates = userProfileChangeRequest {
                                 displayName =
@@ -73,9 +72,35 @@ class RegisterActivity : AppCompatActivity() {
                                     }
                                 }
                             }
-                            database.child("users").child(role.toString()).child(auth.currentUser?.let {
-                                it.uid
-                            }.toString()).child("number").setValue(number.text.toString())
+                            if(role.equals("2131230968")){
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("Number").setValue(number.text.toString())
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("FirstName").setValue(fistName.text.toString())
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("LastName").setValue(lastname.text.toString())
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("Type").setValue("Adult")
+                            }
+                            else{
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("Number").setValue(number.text.toString())
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("FirstName").setValue(fistName.text.toString())
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("LastName").setValue(lastname.text.toString())
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("Type").setValue("Volunteer")
+
+                            }
                             Toast.makeText(this,"User registered.",Toast.LENGTH_SHORT).show()
                             finish()
                         } else {

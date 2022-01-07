@@ -7,15 +7,15 @@
 
     <fragment
         android:id="@+id/taskFragment"
-        android:name="com.example.zivotot_e_krug.ui.users.adult.TaskFragment"
-        android:label="CreateATask" />
+        android:name="com.example.zivotot_e_krug.ui.users.adult.fragments.TaskFragment"
+        android:label="ViewAllTasks" />
     <fragment
         android:id="@+id/reviewFragment"
-        android:name="com.example.zivotot_e_krug.ui.users.adult.ReviewFragment"
+        android:name="com.example.zivotot_e_krug.ui.users.adult.fragments.ReviewFragment"
         android:label="ReviewAllTasks" />
     <fragment
         android:id="@+id/newTaskFragment"
-        android:name="com.example.zivotot_e_krug.ui.users.adult.NewTaskFragment"
+        android:name="com.example.zivotot_e_krug.ui.users.adult.fragments.NewTaskFragment"
         android:label="CreateNewTasks"
         tools:layout="@layout/fragment_new_task" />
 </navigation>

@@ -1,5 +1,7 @@
 package com.example.zivotot_e_krug.ui.login
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,10 +9,22 @@ import android.util.Patterns
 import com.example.zivotot_e_krug.data.LoginRepository
 import com.example.zivotot_e_krug.data.Result
 import com.example.zivotot_e_krug.R
+import com.example.zivotot_e_krug.data.model.TaskName
+import com.example.zivotot_e_krug.data.model.TaskProperties
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
 
 
+    private var database: DatabaseReference = Firebase.database.reference
+    private var auth: FirebaseAuth = Firebase.auth
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
 
@@ -59,5 +73,20 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     // A placeholder password validation check
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
+    }
+    var userType : MutableLiveData<String> = MutableLiveData()
+    var _userType : LiveData<String> = userType
+    private val postListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+          userType.value =  auth.currentUser?.uid?.let { dataSnapshot.child("users").child(it).child("Type").value.toString() }
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            // Getting Post failed, log a message
+            Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+        }
+    }
+    fun addListener(){
+        database.addValueEventListener(postListener)
     }
 }

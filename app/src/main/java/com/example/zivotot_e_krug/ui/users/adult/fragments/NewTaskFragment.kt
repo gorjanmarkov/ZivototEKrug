@@ -1,6 +1,6 @@
-package com.example.zivotot_e_krug.ui.users.adult
+package com.example.zivotot_e_krug.ui.users.adult.fragments
 
-import android.annotation.SuppressLint
+
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
@@ -8,22 +8,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
 import com.example.zivotot_e_krug.R
-import com.example.zivotot_e_krug.databinding.ActivityRegisterBinding
 import com.example.zivotot_e_krug.databinding.FragmentNewTaskBinding
-import com.example.zivotot_e_krug.ui.login.LoginViewModel
-import com.example.zivotot_e_krug.ui.login.LoginViewModelFactory
+import com.example.zivotot_e_krug.ui.users.adult.AdultViewModel
+import com.example.zivotot_e_krug.ui.users.adult.maps.MapsActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
+
 
 
 class NewTaskFragment : Fragment() {
@@ -31,8 +28,9 @@ class NewTaskFragment : Fragment() {
     private lateinit var binding: FragmentNewTaskBinding
     private lateinit var adultViewModel: AdultViewModel
     private lateinit var user: FirebaseUser
+    private lateinit var mView: View
     private var auth: FirebaseAuth = Firebase.auth
-    @SuppressLint("SimpleDateFormat")
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,11 +40,8 @@ class NewTaskFragment : Fragment() {
         auth.currentUser?.let {
             user = it
         }
-        adultViewModel = activity?.let {
-            ViewModelProvider(it).get(AdultViewModel::class.java)
-        }!!
-        adultViewModel.addListener()
 
+        adultViewModel = ViewModelProvider(this)[AdultViewModel::class.java]
         val button = binding.createTask
         val title = binding.nameOfActivity.text
         val description = binding.descriptionOfActivity.text
@@ -54,7 +49,8 @@ class NewTaskFragment : Fragment() {
         val locationPicker = binding.locationPicker
         var repetitive: String = ""
         var urgency: String = ""
-        adultViewModel._location.observe(requireActivity(),{
+        adultViewModel.addLocationListener()
+        adultViewModel._location.observe(viewLifecycleOwner, {
         locationPicker.text = it
         })
 
@@ -70,7 +66,6 @@ class NewTaskFragment : Fragment() {
             val myFormat = "dd.MM.yyyy" // mention the format you need
             val sdf = SimpleDateFormat(myFormat, Locale.ROOT)
             datePicker.text = sdf.format(cal.time)
-
         }
         datePicker.setOnClickListener {
             DatePickerDialog(requireContext(), dateSetListener,
@@ -93,20 +88,24 @@ class NewTaskFragment : Fragment() {
             } else {
                 urgency = "false"
             }
-            adultViewModel.createTask(
+            if(adultViewModel.createTask(
                 requireContext(),
                 user,
                 title.toString(),
                 description.toString(),
-                datePicker.text.toString(),
-                locationPicker.text.toString(),
                 repetitive,
-                urgency
-            )
+                urgency,
+                datePicker.text.toString(),
+                locationPicker.text.toString()
+            )){
+                fragmentManager.let{
+                    it!!.beginTransaction().detach(this).attach(this).commit()
+                }
+            }
         }
 
         locationPicker.setOnClickListener{
-            val intent = Intent(requireContext(),MapsActivity::class.java)
+            val intent = Intent(context, MapsActivity::class.java)
             startActivity(intent)
         }
 

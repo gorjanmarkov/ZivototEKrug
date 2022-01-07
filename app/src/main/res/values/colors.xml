@@ -16,4 +16,6 @@
     <color name="welcome_text_color">#28381B</color>
     <color name="edit_text_background_color">#CDE0D4</color>
     <color name="bottom_navigation_background">#CDE0D4</color>
+    <color name="Red">#d50000</color>
+    <color name="Yellow">#FFFF00</color>
 </resources>
