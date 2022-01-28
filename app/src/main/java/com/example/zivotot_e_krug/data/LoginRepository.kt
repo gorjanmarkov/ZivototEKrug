@@ -1,12 +1,13 @@
 package com.example.zivotot_e_krug.data
 
 import com.example.zivotot_e_krug.data.model.LoggedInUser
+import kotlinx.coroutines.InternalCoroutinesApi
 
 /**
  * Class that requests authentication and user information from the remote data source and
  * maintains an in-memory cache of login status and user credentials information.
  */
-
+@InternalCoroutinesApi
 class LoginRepository(val dataSource: LoginDataSource) {
 
 
@@ -28,10 +29,11 @@ class LoginRepository(val dataSource: LoginDataSource) {
         dataSource.logout()
     }
 
-    fun login(username: String, password: String): Result<LoggedInUser> {
-        // handle login
-        val result = dataSource.login(username, password)
 
+     fun login(username: String, password: String): Result<LoggedInUser> {
+        // handle login
+        val result = dataSource.
+        login(username, password)
         if (result is Result.Success) {
             setLoggedInUser(result.data)
         }

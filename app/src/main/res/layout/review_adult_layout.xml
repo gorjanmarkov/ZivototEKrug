@@ -7,7 +7,7 @@
 
         <variable
             name="properties"
-            type="com.example.zivotot_e_krug.data.model.TaskProperties" />
+            type="com.example.zivotot_e_krug.data.model.Review" />
 
     </data>
 
@@ -17,9 +17,8 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_marginTop="4dp"
-
             android:layout_marginBottom="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,31 +27,20 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/title"
+                    android:id="@+id/name_task"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:maxLines="1"
-                    android:text="@{properties._title}"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="@{properties.taskName}"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:maxLines="3"
-                    android:text="@{properties.date}"
-                    android:textColor="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/title" />
 
                 <TextView
                     android:id="@+id/name_volunteer"
@@ -60,34 +48,56 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
-                    android:text="@{properties.volunteer_name}"
+                    android:text="@{properties.name}"
                     android:textColor="@color/black"
-                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/date" />
+                    app:layout_constraintTop_toBottomOf="@+id/name_task" />
 
                 <TextView
                     android:id="@+id/phone_volunteer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="@{properties.volunteer_number}"
+                    android:layout_marginBottom="4dp"
+                    android:text="@{properties.number}"
                     android:textColor="@color/black"
-                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/name_volunteer" />
-
-                <ImageView
-                    setActiveColor="@{properties.active}"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_circle"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                <TextView
+                    android:id="@+id/rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="@{properties.rating}"
+                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.86"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/phone_volunteer" />
+                <TextView
+                    android:id="@+id/setRatingText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/set_rating"
+                    app:layout_constraintTop_toBottomOf="@+id/rating"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <EditText
+                    android:id="@+id/setRatingEditText"
+                    setRatingAdult="@{properties}"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:inputType="numberSigned"
+                    android:minHeight="48dp"
+                    app:layout_constraintEnd_toEndOf="@id/setRatingText"
+                    app:layout_constraintStart_toStartOf="@id/setRatingText"
+                    app:layout_constraintTop_toBottomOf="@id/setRatingText" />
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

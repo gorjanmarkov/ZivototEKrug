@@ -22,7 +22,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-
 class NewTaskFragment : Fragment() {
 
     private lateinit var binding: FragmentNewTaskBinding
@@ -49,29 +48,43 @@ class NewTaskFragment : Fragment() {
         val locationPicker = binding.locationPicker
         var repetitive: String = ""
         var urgency: String = ""
+        var number: String = ""
+        var name: String = ""
+        var rating = ""
         adultViewModel.addLocationListener()
         adultViewModel._location.observe(viewLifecycleOwner, {
-        locationPicker.text = it
+            locationPicker.text = it
         })
-
+        adultViewModel._adult_name.observe(viewLifecycleOwner) {
+            name = it
+        }
+        adultViewModel._adult_number.observe(viewLifecycleOwner) {
+            number = it
+        }
+        adultViewModel._adult_rating.observe(viewLifecycleOwner) {
+            rating = it
+        }
         datePicker.text = SimpleDateFormat("dd.MM.yyyy").format(System.currentTimeMillis())
 
         var cal = Calendar.getInstance()
 
-        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            cal.set(Calendar.YEAR, year)
-            cal.set(Calendar.MONTH, monthOfYear)
-            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        val dateSetListener =
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                cal.set(Calendar.YEAR, year)
+                cal.set(Calendar.MONTH, monthOfYear)
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-            val myFormat = "dd.MM.yyyy" // mention the format you need
-            val sdf = SimpleDateFormat(myFormat, Locale.ROOT)
-            datePicker.text = sdf.format(cal.time)
-        }
+                val myFormat = "dd.MM.yyyy" // mention the format you need
+                val sdf = SimpleDateFormat(myFormat, Locale.ROOT)
+                datePicker.text = sdf.format(cal.time)
+            }
         datePicker.setOnClickListener {
-            DatePickerDialog(requireContext(), dateSetListener,
+            DatePickerDialog(
+                requireContext(), dateSetListener,
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)).show()
+                cal.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
 
 
@@ -88,23 +101,27 @@ class NewTaskFragment : Fragment() {
             } else {
                 urgency = "false"
             }
-            if(adultViewModel.createTask(
-                requireContext(),
-                user,
-                title.toString(),
-                description.toString(),
-                repetitive,
-                urgency,
-                datePicker.text.toString(),
-                locationPicker.text.toString()
-            )){
-                fragmentManager.let{
+            if (adultViewModel.createTask(
+                    requireContext(),
+                    user,
+                    title.toString(),
+                    description.toString(),
+                    repetitive,
+                    urgency,
+                    datePicker.text.toString(),
+                    locationPicker.text.toString(),
+                    name,
+                    number,
+                    rating
+                )
+            ) {
+                fragmentManager.let {
                     it!!.beginTransaction().detach(this).attach(this).commit()
                 }
             }
         }
 
-        locationPicker.setOnClickListener{
+        locationPicker.setOnClickListener {
             val intent = Intent(context, MapsActivity::class.java)
             startActivity(intent)
         }

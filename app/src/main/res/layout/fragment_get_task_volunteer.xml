@@ -2,16 +2,17 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.users.adult.fragments.ReviewFragment">
+    tools:context=".ui.users.volunteer.fragments.GetTaskFragment">
+
     <androidx.constraintlayout.widget.ConstraintLayout
 
-        android:id="@+id/adult"
+        android:id="@+id/getTask"
         android:layout_width="match_parent"
         android:background="@color/background_color"
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/reviewRecyclerView"
+            android:id="@+id/recyclerViewVolunteer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
@@ -27,4 +28,5 @@
         </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

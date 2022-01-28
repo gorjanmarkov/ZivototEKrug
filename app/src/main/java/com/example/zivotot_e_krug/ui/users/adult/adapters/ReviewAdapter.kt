@@ -4,19 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.zivotot_e_krug.DiffUtil.TaskDiffUtil
-import com.example.zivotot_e_krug.data.model.TaskName
-import com.example.zivotot_e_krug.data.model.TaskProperties
-import com.example.zivotot_e_krug.databinding.TaskLayoutBinding
+import com.example.zivotot_e_krug.DiffUtil.ReviewDiffUtil
+import com.example.zivotot_e_krug.data.model.Review
+import com.example.zivotot_e_krug.databinding.ReviewAdultLayoutBinding
+import com.example.zivotot_e_krug.databinding.ReviewVolunteerLayoutBinding
 
 
-class TaskAdapter : RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
+class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.MyViewHolder>() {
 
-    private var tasks = emptyList<TaskProperties>()
+    private var tasks = emptyList<Review>()
 
-    class MyViewHolder(private val binding: TaskLayoutBinding) :
+    class MyViewHolder(private val binding: ReviewAdultLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(task: TaskProperties) {
+        fun bind(task: Review) {
             binding.properties = task
             binding.executePendingBindings()
         }
@@ -24,7 +24,7 @@ class TaskAdapter : RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
         companion object {
             fun from(parent: ViewGroup): MyViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = TaskLayoutBinding.inflate(layoutInflater, parent, false)
+                val binding = ReviewAdultLayoutBinding.inflate(layoutInflater, parent, false)
                 return MyViewHolder(binding)
             }
         }
@@ -44,11 +44,10 @@ class TaskAdapter : RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
         return tasks.size
     }
 
-    fun setData(newData: TaskName) {
-        val taskDiffUtil = TaskDiffUtil(tasks, newData.name)
-        val diffUtilResult = DiffUtil.calculateDiff(taskDiffUtil)
-        tasks = newData.name
+    fun setData(newData: List<Review>) {
+        val reviewDiffUtil = ReviewDiffUtil(tasks, newData)
+        val diffUtilResult = DiffUtil.calculateDiff(reviewDiffUtil)
+        tasks = newData
         diffUtilResult.dispatchUpdatesTo(this)
-
     }
 }

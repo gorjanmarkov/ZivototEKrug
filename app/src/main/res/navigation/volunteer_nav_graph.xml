@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/volunteer_nav_graph"
+    app:startDestination="@id/allTaskFragment">
+
+    <fragment
+        android:id="@+id/allTaskFragment"
+        android:name="com.example.zivotot_e_krug.ui.users.volunteer.fragments.AllTaskFragment"
+        android:label="AvailableTasks"
+        tools:layout="@layout/fragment_all_task_volunteer" />
+    <fragment
+        android:id="@+id/getTaskFragment"
+        android:name="com.example.zivotot_e_krug.ui.users.volunteer.fragments.GetTaskFragment"
+        android:label="YourTasks"
+        tools:layout="@layout/fragment_get_task_volunteer" />
+    <fragment
+        android:id="@+id/reviewFragmentVolunteer"
+        android:name="com.example.zivotot_e_krug.ui.users.volunteer.fragments.ReviewFragment"
+        android:label="Review"
+        tools:layout="@layout/fragment_review_volunteer" />
+</navigation>

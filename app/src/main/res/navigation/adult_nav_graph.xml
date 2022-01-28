@@ -2,17 +2,19 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_bar"
-    app:startDestination="@id/taskFragment">
+    android:id="@+id/adult_nav_graph"
+    app:startDestination="@id/newTaskFragment">
 
     <fragment
         android:id="@+id/taskFragment"
         android:name="com.example.zivotot_e_krug.ui.users.adult.fragments.TaskFragment"
-        android:label="ViewAllTasks" />
+        android:label="ViewAllTasks"
+        tools:layout="@layout/tasks_fragment" />
     <fragment
         android:id="@+id/reviewFragment"
         android:name="com.example.zivotot_e_krug.ui.users.adult.fragments.ReviewFragment"
-        android:label="ReviewAllTasks" />
+        android:label="Review"
+        tools:layout="@layout/review_task_fragment" />
     <fragment
         android:id="@+id/newTaskFragment"
         android:name="com.example.zivotot_e_krug.ui.users.adult.fragments.NewTaskFragment"

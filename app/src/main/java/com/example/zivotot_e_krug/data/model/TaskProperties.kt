@@ -4,12 +4,17 @@ data class TaskProperties (
         val description : String,
         val repeatable: String,
         val urgency: String,
-        val date : String,
+        var date : String,
         val location : String,
         val _title : String,
-        val volunteer_name : String = null.toString(),
-        val volunteer_number: String = null.toString(),
-        val active : String = "NOT_ACTIVE"
+        var volunteer_name : String = null.toString(),
+        var volunteer_number: String = null.toString(),
+        var volunteer_uid : String = null.toString(),
+        val adult_name : String = null.toString(),
+        val adult_number: String = null.toString(),
+        val adult_uid : String = null.toString(),
+        var adult_rating : String,
+        var active : String = "PENDING"
         )
 
 

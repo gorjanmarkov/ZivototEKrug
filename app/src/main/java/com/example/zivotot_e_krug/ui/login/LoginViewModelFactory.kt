@@ -4,11 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.zivotot_e_krug.data.LoginDataSource
 import com.example.zivotot_e_krug.data.LoginRepository
+import kotlinx.coroutines.InternalCoroutinesApi
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
  * Required given LoginViewModel has a non-empty constructor
  */
+@InternalCoroutinesApi
 class LoginViewModelFactory : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")

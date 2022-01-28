@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Zivotot e Krug</string>
-    <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_name">First Name</string>
     <string name="prompt_last_name">Last Name</string>
@@ -16,7 +15,6 @@
     <string name="volunteer">Volunteer</string>
     <string name="adult">Adult</string>
     <string name="organizer">Organizer</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tasks">All</string>
     <string name="new_task">New</string>
@@ -31,4 +29,13 @@
     <string name="create_task">Create Task</string>
     <string name="location">Location</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="set_rating">Set Rating</string>
+    <string name="apply">Apply</string>
+    <string-array name="Rating">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>

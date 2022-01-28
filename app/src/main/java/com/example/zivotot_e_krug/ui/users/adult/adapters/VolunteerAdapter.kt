@@ -7,14 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.zivotot_e_krug.DiffUtil.TaskDiffUtil
 import com.example.zivotot_e_krug.data.model.TaskName
 import com.example.zivotot_e_krug.data.model.TaskProperties
-import com.example.zivotot_e_krug.databinding.TaskLayoutBinding
+import com.example.zivotot_e_krug.databinding.VolunteerTaskLayoutBinding
 
-
-class TaskAdapter : RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
+class VolunteerAdapter: RecyclerView.Adapter<VolunteerAdapter.MyViewHolder>() {
 
     private var tasks = emptyList<TaskProperties>()
 
-    class MyViewHolder(private val binding: TaskLayoutBinding) :
+    class MyViewHolder(private val binding: VolunteerTaskLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(task: TaskProperties) {
             binding.properties = task
@@ -24,7 +23,7 @@ class TaskAdapter : RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
         companion object {
             fun from(parent: ViewGroup): MyViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = TaskLayoutBinding.inflate(layoutInflater, parent, false)
+                val binding = VolunteerTaskLayoutBinding.inflate(layoutInflater, parent, false)
                 return MyViewHolder(binding)
             }
         }
