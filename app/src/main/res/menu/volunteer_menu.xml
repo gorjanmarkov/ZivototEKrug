@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/allTaskFragment"
+        android:icon="@drawable/all_tasks"
+        android:title="@string/tasks" />
+    <item
+        android:id="@+id/getTaskFragment"
+        android:icon="@drawable/add_task"
+        android:title="@string/new_task" />
+    <item
+        android:id="@+id/reviewFragmentVolunteer"
+        android:title="@string/review_task"
+        android:icon="@drawable/review_task"/>
+</menu>

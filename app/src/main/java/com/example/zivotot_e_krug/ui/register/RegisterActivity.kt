@@ -1,19 +1,16 @@
 package com.example.zivotot_e_krug.ui.register
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Toast
-import com.example.zivotot_e_krug.R
-import com.example.zivotot_e_krug.databinding.ActivityLoginBinding
+
 import com.example.zivotot_e_krug.databinding.ActivityRegisterBinding
-import com.example.zivotot_e_krug.ui.users.adult.AdultActivity
-import com.google.android.material.chip.ChipGroup
 import com.google.firebase.auth.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
@@ -21,12 +18,14 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
     private val TAG by lazy { RegisterActivity::class.java.simpleName }
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        database = Firebase.database.reference
         auth = Firebase.auth
         val username = binding.email
         val password = binding.password
@@ -52,6 +51,7 @@ class RegisterActivity : AppCompatActivity() {
             } else if (number.text.isEmpty() || !number.text.startsWith("07") ) {
                 Toast.makeText(this, "Wrong input for your number", Toast.LENGTH_LONG).show()
             } else {
+                role = roleGroup.checkedChipId
                 auth.createUserWithEmailAndPassword(
                     username.text.toString(),
                     password.text.toString()
@@ -60,20 +60,49 @@ class RegisterActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success")
-                            role = roleGroup.checkedChipId
                             val user = auth.currentUser
                             val profileUpdates = userProfileChangeRequest {
                                 displayName =
-                                    "${fistName.text.toString()} ${lastname.text.toString()}"
+                                    "${fistName.text} ${lastname.text}"
                             }
-                            user!!.updateProfile(profileUpdates).addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    Log.d(TAG, "Updated profile.")
+                            user?.let{
+                                it.updateProfile(profileUpdates).addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Log.d(TAG, "Updated profile.")
+                                    }
                                 }
                             }
+                            if(role.equals("2131230968")){
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("Number").setValue(number.text.toString())
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("FirstName").setValue(fistName.text.toString())
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("LastName").setValue(lastname.text.toString())
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("Type").setValue("Adult")
+                            }
+                            else{
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("Number").setValue(number.text.toString())
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("FirstName").setValue(fistName.text.toString())
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("LastName").setValue(lastname.text.toString())
+                                database.child("users").child(auth.currentUser?.let {
+                                    it.uid
+                                }.toString()).child("Type").setValue("Volunteer")
+
+                            }
                             Toast.makeText(this,"User registered.",Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this,AdultActivity::class.java)
-                            startActivity(intent)
+                            finish()
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.exception)

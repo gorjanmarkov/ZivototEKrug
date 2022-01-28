@@ -5,5 +5,6 @@ package com.example.zivotot_e_krug.data.model
  */
 data class LoggedInUser(
     val displayName: String,
-    val userId: String
+    val userId: String,
+    val type: String
 )

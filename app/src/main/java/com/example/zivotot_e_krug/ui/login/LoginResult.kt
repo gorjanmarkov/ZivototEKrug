@@ -5,5 +5,6 @@ package com.example.zivotot_e_krug.ui.login
  */
 data class LoginResult(
     val success: LoggedInUserView? = null,
-    val error: Int? = null
+    val error: Int? = null,
+    val type : String = null.toString()
 )

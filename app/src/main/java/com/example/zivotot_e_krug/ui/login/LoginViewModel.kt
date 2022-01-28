@@ -1,5 +1,7 @@
 package com.example.zivotot_e_krug.ui.login
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,8 +9,20 @@ import android.util.Patterns
 import com.example.zivotot_e_krug.data.LoginRepository
 import com.example.zivotot_e_krug.data.Result
 import com.example.zivotot_e_krug.R
-
+import com.example.zivotot_e_krug.data.model.TaskName
+import com.example.zivotot_e_krug.data.model.TaskProperties
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.InternalCoroutinesApi
+@InternalCoroutinesApi
 class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+
 
 
     private val _loginForm = MutableLiveData<LoginFormState>()
@@ -24,14 +38,13 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
         _loggedIn.value = loginRepository.isLoggedIn
     }
 
-
-    fun login(username: String, password: String) {
+     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
         val result = loginRepository.login(username, password)
 
         if (result is Result.Success) {
             _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
+                LoginResult(success = LoggedInUserView(displayName = result.data.displayName,result.data.userId,result.data.type) )
         } else {
             _loginResult.value = LoginResult(error = R.string.login_failed)
         }
@@ -60,4 +73,6 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
     }
+
+
 }
